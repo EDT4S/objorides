@@ -69,11 +69,11 @@ public abstract class StandardCar implements Car{
 	}
 
 	public final void gas(double amount){
-		if(amount > 0.0) incrementSpeed(amount);
+		if(amount > 0.0) incrementSpeed(Math.min(amount,1.0));
 	}
 
 	public final void brake(double amount){
-		if(amount > 0.0) decrementSpeed(amount);
+		if(amount > 0.0) decrementSpeed(Math.min(amount,1.0));
 	}
 
 	/**
