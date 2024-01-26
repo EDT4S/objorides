@@ -1,5 +1,7 @@
 package dit954lab;
 
+import vector2d.Vector2d;
+
 public interface Movable{
     /**
      * Moves something in its current speed and direction that it is facing.
@@ -16,4 +18,14 @@ public interface Movable{
      * Change direction to the right in some fixed angle.
      */
 	void turnRight();
+
+    /**
+     * Gets the current position.
+     */
+	Vector2d<Double> getPosition();
+
+    /**
+     * Gets the current velocity.
+     */
+	Vector2d<Double> getVelocity();
 }

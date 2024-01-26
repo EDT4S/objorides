@@ -2,11 +2,13 @@ package dit954lab.cars;
 
 import java.awt.*;
 
+import vector2d.Coord;
+
 public class Volvo240 extends StandardCar{
     public final static double trimFactor = 1.25;
 
-    public Volvo240(){
-        super(4,100,Color.black,"Volvo240");
+    public Volvo240(Coord position,double angle){
+        super(position,angle,4,100,Color.black,"Volvo240");
     }
 
     @Override
@@ -16,11 +18,11 @@ public class Volvo240 extends StandardCar{
 
     @Override
     protected void incrementSpeed(double amount){
-        this.currentSpeed = Math.min(this.getSpeedFromDelta(amount),getEnginePower());
+        this.velocity.setMagnitude(Math.min(this.getSpeedFromDelta(amount),getEnginePower()));
     }
 
     @Override
     protected void decrementSpeed(double amount){
-        this.currentSpeed = Math.max(this.getSpeedFromDelta(-amount),0);
+        this.velocity.setMagnitude(Math.max(this.getSpeedFromDelta(-amount),0));
     }
 }

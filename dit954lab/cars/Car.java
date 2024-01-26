@@ -2,7 +2,9 @@ package dit954lab.cars;
 
 import java.awt.Color;
 
-public interface Car{
+import dit954lab.Movable;
+
+public interface Car extends Movable{
 	/**
 	 * Gets the current number of doors on the car.
 	 */
@@ -57,4 +59,9 @@ public interface Car{
 	 * @param amount A positive amount.
 	 */
 	void brake(double amount);
+
+	/**
+	 * Gets the modelName of the car.
+	 */
+	String getModelName();	
 }

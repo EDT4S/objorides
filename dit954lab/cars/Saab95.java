@@ -2,11 +2,13 @@ package dit954lab.cars;
 
 import java.awt.*;
 
+import vector2d.Coord;
+
 public class Saab95 extends StandardCar{
     protected boolean turboOn;
 
-    public Saab95(){
-        super(2,125,Color.red,"Saab95");
+    public Saab95(Coord position,double angle){
+        super(position,angle,2,125,Color.red,"Saab95");
         this.turboOn = false;
     }
 
@@ -33,11 +35,11 @@ public class Saab95 extends StandardCar{
 
     @Override
     protected void incrementSpeed(double amount){
-        this.currentSpeed = this.getSpeedFromDelta(amount);
+        this.velocity.setMagnitude(this.getSpeedFromDelta(amount));
     }
 
     @Override
     protected void decrementSpeed(double amount){
-        this.currentSpeed = this.getSpeedFromDelta(-amount);
+        this.velocity.setMagnitude(this.getSpeedFromDelta(-amount));
     }
 }

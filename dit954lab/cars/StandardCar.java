@@ -2,6 +2,10 @@ package dit954lab.cars;
 
 import java.awt.*;
 
+import vector2d.Coord;
+import vector2d.Polar;
+import vector2d.Vector2d;
+
 public abstract class StandardCar implements Car{
 	public final static double TURN_ANGLE_STEP = 0.1; 
 
@@ -23,60 +27,54 @@ public abstract class StandardCar implements Car{
 	/**
 	 * The car model name.
 	 */
-	public final String modelName;
-
+	private final String modelName;
+	
 	/**
-	 * The current speed of the car.
+     * The current position of the car.
+     */
+	protected Coord position;
+	
+	/**
+	 * The current speed and direction of the car.
 	 */
-	protected double currentSpeed;
+	protected Polar velocity;
 
-	protected StandardCar(int nrDoors,double enginePower,Color color,String modelName){
+	protected StandardCar(Coord position,double angle,int nrDoors,double enginePower,Color color,String modelName){
+		this.position = position;
+		this.velocity = new Polar(0.0,angle);
 		this.nrDoors = nrDoors;
 		this.enginePower = enginePower;
 		this.color = color;
 		this.modelName = modelName;
 	}
 
-	/**
-	 * Gets the current speed of the car.
-	 */
 	public double getCurrentSpeed(){
-		return currentSpeed;
+		return velocity.getMagnitude();
 	}
 
-	/**
-	 * Gets the current color of the car.
-	 */
 	public Color getColor(){
 		return color;
 	}
 
-	/**
-	 * Sets the current speed of the car.
-	 */
 	public void setColor(Color clr){
 		color = clr;
 	}
 
-    /**
-     * Starts the car by setting the current speed to a fixed amount.
-     * Note: The vehicle will start moving (the speed will be non-zero).
-     */
 	public void startEngine(){
-		currentSpeed = 0.1;
+		this.velocity.setMagnitude(0.1);
 	}
 
-    /**
-     * Stops the car immediately by setting the current speed to 0.
-     */
 	public void stopEngine(){
-		currentSpeed = 0.0;
+		this.velocity.setMagnitude(0.0);
 	}
 
-    /**
-     * The speed factor indicates how much the car accelerates when increasing/decreasing the speed.
-     */
-	public abstract double speedFactor();
+	public final void gas(double amount){
+		if(amount > 0.0) incrementSpeed(amount);
+	}
+
+	public final void brake(double amount){
+		if(amount > 0.0) decrementSpeed(amount);
+	}
 
 	/**
      * Increases the speed by a certain amount.
@@ -97,34 +95,40 @@ public abstract class StandardCar implements Car{
 	}
 
 	/**
-	 * Increases the speed by a certain amount.
-	 * Does nothing if the amount is non-positive.
-	 * @param amount A positive amount.
-	 */
-	public final void gas(double amount){
-		if(amount > 0.0) incrementSpeed(amount);
+     * Gets the current position of the car.
+     */
+	public final Vector2d<Double> getPosition(){
+		return this.position;
 	}
 
 	/**
-	 * Decreases the speed by a certain amount.
-	 * Does nothing if the amount is non-positive.
-	 * @param amount A positive amount.
+	 * Gets the current speed and direction of the car.
 	 */
-	public final void brake(double amount){
-		if(amount > 0.0) decrementSpeed(amount);
+	public final Vector2d<Double> getVelocity(){
+		return this.velocity;
 	}
 
-	/**
-	 * Gets the current number of doors on the car.
-	 */
+	public final void move(){
+		this.position.add(this.velocity);
+	}
+
+	public final void turnLeft(){
+		this.velocity.turn(-TURN_ANGLE_STEP);
+	}
+
+	public final void turnRight(){
+		this.velocity.turn(TURN_ANGLE_STEP);
+	}
+
 	public int getNrDoors(){
 		return nrDoors;
 	}
 
-	/**
-	 * Gets the current engine power of the car.
-	 */
 	public double getEnginePower(){
 		return enginePower;
+	}
+	
+	public String getModelName(){
+		return modelName;
 	}
 }
