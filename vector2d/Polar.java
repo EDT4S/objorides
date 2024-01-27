@@ -15,7 +15,7 @@ public final class Polar implements Vector2d<Double>{
 		this.assign(pos);
 	}
 
-	public static double normalizeAngle(double v){
+	public static final double normalizeAngle(double v){
 		return ((v% (2.0*Math.PI)) + (2.0*Math.PI)) % (2.0*Math.PI);
 	}
 

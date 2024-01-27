@@ -30,16 +30,6 @@ public class Saab95 extends StandardCar{
 	public double speedFactor(){
 		double turbo = 1;
 		if(this.turboOn) turbo = 1.3;
-		return this.getEnginePower() * 0.01 * turbo;
-	}
-
-	@Override
-	protected void incrementSpeed(double amount){
-		this.velocity.setMagnitude(this.getSpeedFromDelta(amount));
-	}
-
-	@Override
-	protected void decrementSpeed(double amount){
-		this.velocity.setMagnitude(this.getSpeedFromDelta(-amount));
+		return super.speedFactor() * turbo;
 	}
 }

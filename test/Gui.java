@@ -38,9 +38,11 @@ class Gui{
 
 		@Override
 		protected void paintComponent(Graphics g){
+			final double scale = 20.0;
+
 			super.paintComponent(g);
-			double x = this.thing.car1.getPosition().getX();
-			double y = this.thing.car1.getPosition().getY();
+			double x = this.thing.car1.getPosition().getX() / scale;
+			double y = this.thing.car1.getPosition().getY() / scale ;
 			double dx = this.thing.car1.getVelocity().getX();
 			double dy = this.thing.car1.getVelocity().getY();
 
@@ -59,7 +61,7 @@ class Gui{
 			g.setColor(colorWithAlpha(this.thing.car1.getColor(),128));
 			g.fillRect((int)x-8,(int)y-8,16,16);
 			g.setColor(Color.BLACK);
-			g.drawLine((int)x,(int)y,(int)(x+dx*4),(int)(y+dy*4));
+			g.drawLine((int)x,(int)y,(int)(x+dx/scale*4),(int)(y+dy/scale*4));
 			g.drawRect((int)x-8,(int)y-8,16,16);
 			g.drawString(this.thing.car1.getModelName(),(int)x,(int)y - g.getFont().getSize());
 		}
@@ -97,10 +99,10 @@ class Gui{
 					car1.turnRight();
 					break;
 				case KeyEvent.VK_UP:
-					car1.gas(1);
+					car1.gas(0.4);
 					break;
 				case KeyEvent.VK_DOWN:
-					car1.brake(1);
+					car1.brake(0.7);
 					break;
 				case KeyEvent.VK_SPACE:
 					car1.startEngine();

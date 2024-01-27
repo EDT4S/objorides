@@ -68,23 +68,27 @@ public abstract class StandardCar implements Car{
 		this.velocity.setMagnitude(0.0);
 	}
 
-	public final void gas(double amount){
+	public void gas(double amount){
 		if(amount > 0.0) incrementSpeed(Math.min(amount,1.0));
 	}
 
-	public final void brake(double amount){
+	public void brake(double amount){
 		if(amount > 0.0) decrementSpeed(Math.min(amount,1.0));
 	}
 
 	/**
 	 * Increases the speed by a certain amount.
 	 */
-	protected abstract void incrementSpeed(double amount);
+	protected void incrementSpeed(double amount){
+		this.velocity.setMagnitude(Math.min(this.getSpeedFromDelta(amount),this.getEnginePower()));
+	}
 
 	/**
 	 * Decreases the speed by a certain amount.
 	 */
-	protected abstract void decrementSpeed(double amount);
+	protected void decrementSpeed(double amount){
+		this.velocity.setMagnitude(Math.max(this.getSpeedFromDelta(-amount),0.0));
+	}
 
 	/**
 	 * The new speed when it is increased by a certain amount using the speed factor of the car.
@@ -97,14 +101,14 @@ public abstract class StandardCar implements Car{
 	/**
 	 * Gets the current position of the car.
 	 */
-	public final Vector2d<Double> getPosition(){
+	public Vector2d<Double> getPosition(){
 		return this.position;
 	}
 
 	/**
 	 * Gets the current speed and direction of the car.
 	 */
-	public final Vector2d<Double> getVelocity(){
+	public Vector2d<Double> getVelocity(){
 		return this.velocity;
 	}
 
