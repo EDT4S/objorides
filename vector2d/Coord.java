@@ -7,24 +7,24 @@ public final class Coord implements Vector2d<Double>{
 	public double x;
 	public double y;
 
-    public Coord(double x, double y){
-        this.x = x;
-        this.y = y;
-    }
+	public Coord(double x, double y){
+		this.x = x;
+		this.y = y;
+	}
 
-    public Coord(Vector2d<Double> pos){
-    	this.assign(pos);
-    }
+	public Coord(Vector2d<Double> pos){
+		this.assign(pos);
+	}
 
-    @Override
-    public Double getX(){
-        return this.x;
-    }
+	@Override
+	public Double getX(){
+		return this.x;
+	}
 
-    @Override
-    public Double getY(){
-        return this.y;
-    }
+	@Override
+	public Double getY(){
+		return this.y;
+	}
 
 	@Override
 	public Double getAngle(){
@@ -83,7 +83,7 @@ public final class Coord implements Vector2d<Double>{
 
 	@Override
 	public void setMagnitude(Double magnitude){
-		this.scale(magnitude / this.getMagnitude());		
+		this.scale(magnitude / this.getMagnitude());
 	}
 
 	@Override

@@ -5,41 +5,41 @@ import java.awt.*;
 import vector2d.Coord;
 
 public class Saab95 extends StandardCar{
-    protected boolean turboOn;
+	protected boolean turboOn;
 
-    public Saab95(Coord position,double angle){
-        super(position,angle,2,125,Color.red,"Saab95");
-        this.turboOn = false;
-    }
+	public Saab95(Coord position,double angle){
+		super(position,angle,2,125,Color.red,"Saab95");
+		this.turboOn = false;
+	}
 
-    /**
-     * Activates the turbo feature of this car.
-     */
-    public void setTurboOn(){
-        this.turboOn = true;
-    }
+	/**
+	 * Activates the turbo feature of this car.
+	 */
+	public void setTurboOn(){
+		this.turboOn = true;
+	}
 
-    /**
-     * Deactivates the turbo feature of this car.
-     */
-    public void setTurboOff(){
-        this.turboOn = false;
-    }
+	/**
+	 * Deactivates the turbo feature of this car.
+	 */
+	public void setTurboOff(){
+		this.turboOn = false;
+	}
 
-    @Override
-    public double speedFactor(){
-        double turbo = 1;
-        if(this.turboOn) turbo = 1.3;
-        return this.getEnginePower() * 0.01 * turbo;
-    }
+	@Override
+	public double speedFactor(){
+		double turbo = 1;
+		if(this.turboOn) turbo = 1.3;
+		return this.getEnginePower() * 0.01 * turbo;
+	}
 
-    @Override
-    protected void incrementSpeed(double amount){
-        this.velocity.setMagnitude(this.getSpeedFromDelta(amount));
-    }
+	@Override
+	protected void incrementSpeed(double amount){
+		this.velocity.setMagnitude(this.getSpeedFromDelta(amount));
+	}
 
-    @Override
-    protected void decrementSpeed(double amount){
-        this.velocity.setMagnitude(this.getSpeedFromDelta(-amount));
-    }
+	@Override
+	protected void decrementSpeed(double amount){
+		this.velocity.setMagnitude(this.getSpeedFromDelta(-amount));
+	}
 }

@@ -7,33 +7,33 @@ import vector2d.Polar;
 import vector2d.Vector2d;
 
 public abstract class StandardCar implements Car{
-	public final static double TURN_ANGLE_STEP = 0.1; 
+	public final static double TURN_ANGLE_STEP = 0.1;
 
-    /**
-     * Number of doors on the car.
-     */
+	/**
+	 * Number of doors on the car.
+	 */
 	private final int nrDoors;
-	
-    /**
-     * Engine power of the car.
-     */
+
+	/**
+	 * Engine power of the car.
+	 */
 	private final double enginePower;
 
-    /**
-     * Color of the car.
-     */
+	/**
+	 * Color of the car.
+	 */
 	private Color color;
-	
+
 	/**
 	 * The car model name.
 	 */
 	private final String modelName;
-	
+
 	/**
-     * The current position of the car.
-     */
+	 * The current position of the car.
+	 */
 	protected Coord position;
-	
+
 	/**
 	 * The current speed and direction of the car.
 	 */
@@ -77,26 +77,26 @@ public abstract class StandardCar implements Car{
 	}
 
 	/**
-     * Increases the speed by a certain amount.
-     */
+	 * Increases the speed by a certain amount.
+	 */
 	protected abstract void incrementSpeed(double amount);
 
 	/**
-     * Decreases the speed by a certain amount.
-     */
+	 * Decreases the speed by a certain amount.
+	 */
 	protected abstract void decrementSpeed(double amount);
 
 	/**
 	 * The new speed when it is increased by a certain amount using the speed factor of the car.
-     * A helper method intended to be used when implementing incrementSpeed and decrementSpeed.
-     */
+	 * A helper method intended to be used when implementing incrementSpeed and decrementSpeed.
+	 */
 	protected final double getSpeedFromDelta(double amount){
 		return this.getCurrentSpeed() + this.speedFactor() * amount;
 	}
 
 	/**
-     * Gets the current position of the car.
-     */
+	 * Gets the current position of the car.
+	 */
 	public final Vector2d<Double> getPosition(){
 		return this.position;
 	}
@@ -127,7 +127,7 @@ public abstract class StandardCar implements Car{
 	public double getEnginePower(){
 		return enginePower;
 	}
-	
+
 	public String getModelName(){
 		return modelName;
 	}

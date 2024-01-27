@@ -18,7 +18,7 @@ public final class Polar implements Vector2d<Double>{
 	public static double normalizeAngle(double v){
 		return ((v% (2.0*Math.PI)) + (2.0*Math.PI)) % (2.0*Math.PI);
 	}
-	
+
 	public void normalize(){
 		if(this.magnitude < 0.0){
 			this.magnitude = -this.magnitude;
@@ -26,7 +26,7 @@ public final class Polar implements Vector2d<Double>{
 		}
 		this.angle = normalizeAngle(this.angle);
 	}
-	
+
 	@Override
 	public Double getX(){
 		return this.magnitude * Math.cos(this.angle);

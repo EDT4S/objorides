@@ -35,7 +35,7 @@ class Gui{
 			//Converts an RGB integer to an RGBA integer by copying the bits of alpha to the alpha channel.
 			return new Color((c.getRGB() | 0b11111111_00000000_00000000_00000000) & (alpha << 24),true);
 		}
-		
+
 		@Override
 		protected void paintComponent(Graphics g){
 			super.paintComponent(g);
@@ -47,7 +47,7 @@ class Gui{
 			//Draw background
 			g.setColor(new Color(253,242,234));
 			g.fillRect(0,0,this.getWidth(),this.getHeight());
-			
+
 			//Draw info
 			g.setColor(Color.DARK_GRAY);
 			g.drawString("x: " + Integer.toString((int)x),0,g.getFont().getSize());
@@ -77,7 +77,7 @@ class Gui{
 
 	public static final class Thing implements KeyListener,ActionListener{
 		public Car car1;
-		
+
 		public Thing(){
 			this.restart();
 		}
@@ -85,7 +85,7 @@ class Gui{
 		public void restart(){
 			car1 = new Volvo240(new Coord(100,100),0);
 		}
-		
+
 		@Override
 		public void keyPressed(KeyEvent e){
 			System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
@@ -122,7 +122,7 @@ class Gui{
 			car1.move();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		//Lag on Linux otherwise (Source: https://stackoverflow.com/questions/41001623/java-animation-programs-running-jerky-in-linux)
 		System.setProperty("sun.java2d.opengl","true");

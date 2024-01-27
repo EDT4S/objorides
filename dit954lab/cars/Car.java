@@ -63,5 +63,5 @@ public interface Car extends Movable{
 	/**
 	 * Gets the modelName of the car.
 	 */
-	String getModelName();	
+	String getModelName();
 }

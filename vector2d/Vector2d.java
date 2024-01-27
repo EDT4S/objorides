@@ -10,7 +10,7 @@ public interface Vector2d<S>{
 	 * @return The horizontal coordinate scalar of the vector.
 	 */
 	S getX();
-	
+
 	/**
 	 * @return The vertical coordinate scalar of the vector.
 	 */
@@ -33,7 +33,7 @@ public interface Vector2d<S>{
 	 * @param x The new value
 	 */
 	void setX(S x);
-	
+
 	/**
 	 * Sets the vertical coordinate scalar of the vector.
 	 * @param y The new value
@@ -77,10 +77,10 @@ public interface Vector2d<S>{
 	 * @param angle The angle (unit: radians)
 	 */
 	void turn(S angle);
-	
+
 	/**
 	 * Turns this vector to the opposite direction.
-	 */	
+	 */
 	void oppose();
 
 
@@ -89,6 +89,6 @@ public interface Vector2d<S>{
 	 * The distance between this vector and an other vector.
 	 * @param other The other vector
 	 * @return The distance
-	 */	
+	 */
 	S distance(Vector2d<S> other);
 }
