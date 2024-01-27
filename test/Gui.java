@@ -1,4 +1,4 @@
-package dit954lab.test;
+package test;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,7 +13,7 @@ import dit954lab.cars.Car;
 import dit954lab.cars.Volvo240;
 import vector2d.Coord;
 
-public class Gui{
+class Gui{
 	public static final class DrawPanel extends JPanel implements ActionListener{
 		private static final long serialVersionUID = -1544594115852711561L;
 

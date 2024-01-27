@@ -1,5 +1,4 @@
 package vector2d;
-
 /**
  * A mutable 2-dimensional vector represented using polar coordinates.
  */
@@ -7,24 +6,36 @@ public final class Polar implements Vector2d<Double>{
 	public double magnitude;
 	public double angle;
 
-    public Polar(double magnitude, double angle){
-        this.magnitude = magnitude;
-        this.angle = angle;
-    }
+	public Polar(double magnitude, double angle){
+		this.magnitude = magnitude;
+		this.angle = angle;
+	}
 
-    public Polar(Vector2d<Double> pos){
-    	this.assign(pos);
-    }
+	public Polar(Vector2d<Double> pos){
+		this.assign(pos);
+	}
 
-    @Override
-    public Double getX(){
-        return this.magnitude * Math.cos(this.angle);
-    }
+	public static double normalizeAngle(double v){
+		return ((v% (2.0*Math.PI)) + (2.0*Math.PI)) % (2.0*Math.PI);
+	}
+	
+	public void normalize(){
+		if(this.magnitude < 0.0){
+			this.magnitude = -this.magnitude;
+			this.angle+= Math.PI;
+		}
+		this.angle = normalizeAngle(this.angle);
+	}
+	
+	@Override
+	public Double getX(){
+		return this.magnitude * Math.cos(this.angle);
+	}
 
-    @Override
-    public Double getY(){
-        return this.magnitude * Math.sin(this.angle);
-    }
+	@Override
+	public Double getY(){
+		return this.magnitude * Math.sin(this.angle);
+	}
 
 	@Override
 	public Double getAngle(){
@@ -88,5 +99,4 @@ public final class Polar implements Vector2d<Double>{
 		this.angle     = v.getAngle();
 		this.magnitude = v.getMagnitude();
 	}
-
 }
