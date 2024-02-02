@@ -1,53 +1,51 @@
-package test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Random;
 
-import org.junit.jupiter.api.Test;
-
+import org.junit.Test;
 import vector2d.Coord;
 import vector2d.Polar;
 
-class JUnitVector{
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class JUnitVector{
 	Random rand = new Random();
 
 	@Test
-	void testCoordSimple(){
+	public void testCoordSimple(){
 		double x = rand.nextDouble();
 		double y = rand.nextDouble();
 		Coord p = new Coord(x,y);
 
 		//Constructor
-		assertEquals(p.x,x);
-		assertEquals(p.y,y);
+		assertEquals(p.x,x,0.0);
+		assertEquals(p.y,y,0.0);
 
 		//Getters
-		assertEquals(p.x,p.getX());
-		assertEquals(p.y,p.getY());
+		assertEquals(p.x,(double)p.getX(),0.0);
+		assertEquals(p.y,(double)p.getY(),0.0);
 
 		//Setters
 		x = rand.nextDouble();
 		y = rand.nextDouble();
 		p.setX(x);
 		p.setY(y);
-		assertEquals(p.x,x);
-		assertEquals(p.y,y);
+		assertEquals(p.x,x,0.0);
+		assertEquals(p.y,y,0.0);
 	}
 
 	@Test
-	void testPolarSimple(){
+	public void testPolarSimple(){
 		double v = rand.nextDouble();
 		double r = rand.nextDouble();
 		Polar p = new Polar(r,v);
 
 		//Constructor
-		assertEquals(p.angle,v);
-		assertEquals(p.magnitude,r);
+		assertEquals(p.angle,v,0.0);
+		assertEquals(p.magnitude,r,0.0);
 
 		//Getters
-		assertEquals(p.angle,p.getAngle());
-		assertEquals(p.magnitude,p.getMagnitude());
+		assertEquals(p.angle,(double)p.getAngle(),0.0);
+		assertEquals(p.magnitude,(double)p.getMagnitude(),0.0);
 
 		//normalize
 		p.normalize();
@@ -59,12 +57,12 @@ class JUnitVector{
 		r = rand.nextDouble();
 		p.setAngle(v);
 		p.setMagnitude(r);
-		assertEquals(p.angle,v);
-		assertEquals(p.magnitude,r);
+		assertEquals(p.angle,(double)v,0.0);
+		assertEquals(p.magnitude,(double)r,0.0);
 	}
 
 	@Test
-	void testCoordPolarCorrespondence(){
+	public void testCoordPolarCorrespondence(){
 		Polar p1 = new Polar(5.0,0.92729522);
 		Coord p2 = new Coord(3.0,4.0);
 

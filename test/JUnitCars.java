@@ -1,15 +1,15 @@
-package test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.awt.Color;
-import org.junit.jupiter.api.Test;
 
 import dit954lab.cars.Car;
 import dit954lab.cars.Saab95;
 import dit954lab.cars.Volvo240;
+import org.junit.Test;
 import vector2d.Coord;
 
-class JUnitCars {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class JUnitCars {
 	@Test
 	public void gasUpperLimit(){
 		Car car;
@@ -41,7 +41,7 @@ class JUnitCars {
 		car.move();
 		double spd2 = car.getCurrentSpeed();
 
-		assertEquals(spd1,spd2);
+		assertEquals(spd1,spd2,0.0);
 	}
 
 	@Test
@@ -155,11 +155,11 @@ class JUnitCars {
 
 		assertTrue(spd1 > 0.0);
 		assertTrue(spd2 > spd1);
-		assertEquals(spd3,spd2);
-		assertEquals(spd4,spd3);
+		assertEquals(spd3,spd2,0.0);
+		assertEquals(spd4,spd3,0.0);
 		assertTrue(spd5 <= spd4);
-		assertEquals(0.0,spd6);
-		assertEquals(0.0,spd7);
+		assertEquals(0.0,spd6,0.0);
+		assertEquals(0.0,spd7,0.0);
 	}
 
 	@Test
@@ -194,6 +194,6 @@ class JUnitCars {
 			car.move();
 			assertTrue(car.getCurrentSpeed() > prevSpd);
 		}while(car.getCurrentSpeed() < car.getEnginePower());
-		assertEquals(car.getCurrentSpeed(),car.getEnginePower());
+		assertEquals(car.getCurrentSpeed(),car.getEnginePower(),0.0);
 	}
 }
