@@ -1,12 +1,13 @@
-package dit954lab.cars;
+package dit954lab.world.vehicles;
 
 import java.awt.*;
 
+import dit954lab.Placable;
 import vector2d.Coord;
 import vector2d.Polar;
 import vector2d.Vector2d;
 
-public abstract class StandardCar implements Car{
+public abstract class StandardCar implements Car, Placable {
 	public final static double TURN_ANGLE_STEP = 0.1;
 
 	/**
@@ -32,12 +33,12 @@ public abstract class StandardCar implements Car{
 	/**
 	 * The current position of the car.
 	 */
-	protected Coord position;
+	protected Vector2d<Double> position;
 
 	/**
 	 * The current speed and direction of the car.
 	 */
-	protected Polar velocity;
+	protected Vector2d<Double> velocity;
 
 	protected StandardCar(Coord position,double angle,int nrDoors,double enginePower,Color color,String modelName){
 		this.position = position;
@@ -46,10 +47,6 @@ public abstract class StandardCar implements Car{
 		this.enginePower = enginePower;
 		this.color = color;
 		this.modelName = modelName;
-	}
-
-	public double getCurrentSpeed(){
-		return velocity.getMagnitude();
 	}
 
 	public Color getColor(){
@@ -134,5 +131,10 @@ public abstract class StandardCar implements Car{
 
 	public String getModelName(){
 		return modelName;
+	}
+
+	public boolean place(Vector2d<Double> pos){
+		this.position = pos;
+		return true;
 	}
 }

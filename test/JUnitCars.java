@@ -1,8 +1,8 @@
 import java.awt.Color;
 
-import dit954lab.cars.Car;
-import dit954lab.cars.Saab95;
-import dit954lab.cars.Volvo240;
+import dit954lab.world.vehicles.Car;
+import dit954lab.world.vehicles.Saab95;
+import dit954lab.world.vehicles.Volvo240;
 import org.junit.Test;
 import vector2d.Coord;
 

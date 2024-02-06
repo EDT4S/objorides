@@ -7,8 +7,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
 
-import dit954lab.cars.Car;
-import dit954lab.cars.Volvo240;
+import dit954lab.world.vehicles.Car;
+import dit954lab.world.vehicles.Volvo240;
 import vector2d.Coord;
 
 class Gui{

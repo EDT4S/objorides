@@ -20,12 +20,8 @@ public interface Movable{
 	void turnRight();
 
 	/**
-	 * Gets the current position.
+	 * Whether it is moving.
+	 * @return True if moving.
 	 */
-	Vector2d<Double> getPosition();
-
-	/**
-	 * Gets the current velocity.
-	 */
-	Vector2d<Double> getVelocity();
+	boolean isMoving();
 }

@@ -1,4 +1,4 @@
-package dit954lab.cars;
+package dit954lab.world.vehicles;
 
 import java.awt.*;
 
