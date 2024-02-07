@@ -26,6 +26,10 @@ public class Saab95 extends StandardCar{
 		this.turboOn = false;
 	}
 
+	public boolean isTurboOn(){
+		return this.turboOn;
+	}
+	
 	@Override
 	public double speedFactor(){
 		double turbo = 1;

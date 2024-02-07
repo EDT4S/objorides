@@ -5,15 +5,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
+import dit954lab.Movable;
+import dit954lab.Physical;
+import dit954lab.world.CarRepairShop;
 import dit954lab.world.vehicles.Car;
+import dit954lab.world.vehicles.CarTransporter;
+import dit954lab.world.vehicles.Saab95;
+import dit954lab.world.vehicles.Scania;
+import dit954lab.world.vehicles.StandardCar;
+import dit954lab.world.vehicles.Vehicle;
 import dit954lab.world.vehicles.Volvo240;
 import vector2d.Coord;
 
 class Gui{
 	public static final class DrawPanel extends JPanel implements ActionListener{
 		private static final long serialVersionUID = -1544594115852711561L;
+		private static final double scale = 20.0;
 
 		private Thing thing;
 
@@ -34,34 +45,58 @@ class Gui{
 			return new Color((c.getRGB() | 0b11111111_00000000_00000000_00000000) & (alpha << 24),true);
 		}
 
+		protected void paintInterface(Graphics g){
+			final double x = this.thing.player.getPosition().getX() / scale;
+			final double y = this.thing.player.getPosition().getY() / scale ;
+			final double dx = this.thing.player.getVelocity().getX();
+			final double dy = this.thing.player.getVelocity().getY();
+			final int h = g.getFont().getSize();
+
+			g.setColor(Color.DARK_GRAY);
+			g.drawString("x: " + Integer.toString((int)x),0,h);
+			g.drawString("y: " + Integer.toString((int)y),0,h * 2);
+			g.drawString("dx: " + Double.toString(dx),0,h * 3);
+			g.drawString("dy: " + Double.toString(dy),0,h * 4);
+			if(this.thing.player instanceof Saab95){
+				g.drawString("Turbo: " + Boolean.toString(((Saab95)this.thing.player).isTurboOn()),0,h * 5);
+			}
+		}
+
+		protected void paintVehicle(Graphics g,Physical obj){
+			double x = obj.getPosition().getX() / scale;
+			double y = obj.getPosition().getY() / scale ;
+			double dx = obj.getVelocity().getX();
+			double dy = obj.getVelocity().getY();
+			final int h = g.getFont().getSize();
+
+			if(obj instanceof Car){
+				Car car = (Car)obj;
+				g.setColor(colorWithAlpha(car.getColor(),128));
+				g.fillRect((int)x-8,(int)y-8,16,16);
+			}
+			g.setColor(Color.BLACK);
+			g.drawLine((int)x,(int)y,(int)(x+dx/scale*4),(int)(y+dy/scale*4));
+			g.drawRect((int)x-8,(int)y-8,16,16);
+			if(obj instanceof Vehicle){
+				g.drawString(((Vehicle)obj).getModelName(),(int)x,(int)y - h);
+			}
+		}
+		
 		@Override
 		protected void paintComponent(Graphics g){
-			final double scale = 20.0;
-
 			super.paintComponent(g);
-			double x = this.thing.car1.getPosition().getX() / scale;
-			double y = this.thing.car1.getPosition().getY() / scale ;
-			double dx = this.thing.car1.getVelocity().getX();
-			double dy = this.thing.car1.getVelocity().getY();
 
 			//Draw background
 			g.setColor(new Color(253,242,234));
 			g.fillRect(0,0,this.getWidth(),this.getHeight());
 
-			//Draw info
-			g.setColor(Color.DARK_GRAY);
-			g.drawString("x: " + Integer.toString((int)x),0,g.getFont().getSize());
-			g.drawString("y: " + Integer.toString((int)y),0,g.getFont().getSize() * 2);
-			g.drawString("dx: " + Double.toString(dx),0,g.getFont().getSize() * 3);
-			g.drawString("dy: " + Double.toString(dy),0,g.getFont().getSize() * 4);
-
-			//Draw car
-			g.setColor(colorWithAlpha(this.thing.car1.getColor(),128));
-			g.fillRect((int)x-8,(int)y-8,16,16);
-			g.setColor(Color.BLACK);
-			g.drawLine((int)x,(int)y,(int)(x+dx/scale*4),(int)(y+dy/scale*4));
-			g.drawRect((int)x-8,(int)y-8,16,16);
-			g.drawString(this.thing.car1.getModelName(),(int)x,(int)y - g.getFont().getSize());
+			//Draw player info
+			paintInterface(g);
+			
+			//Draw vehicles
+			for(Physical obj : this.thing.objs){
+				paintVehicle(g,obj);
+			}
 		}
 
 		@Override
@@ -76,41 +111,107 @@ class Gui{
 	}
 
 	public static final class Thing implements KeyListener,ActionListener{
-		public Car car1;
+		public ArrayList<Physical> objs;
+		public Vehicle player;
 
 		public Thing(){
 			this.restart();
 		}
 
 		public void restart(){
-			car1 = new Volvo240(new Coord(100,100),0);
+			player = new Volvo240(new Coord(1000,1000),0);
+			objs = new ArrayList<>(5);
+			objs.add(player);
+			objs.add(new Saab95(new Coord(3000,1000),0));
+			objs.add(new Scania(new Coord(5000,1000),0));
+			objs.add(new CarTransporter<StandardCar>(new Coord(7000,1000),0));
+			objs.add(new Volvo240(new Coord(1000,3000),0));
+			objs.add(new Volvo240(new Coord(3000,3000),0));
+			objs.add(new CarRepairShop<Volvo240>(2,new Coord(5000,3000)));
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void keyPressed(KeyEvent e){
 			System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
 			switch(e.getKeyCode()){
 				case KeyEvent.VK_LEFT:
-					car1.turnLeft();
+					player.turnLeft();
 					break;
 				case KeyEvent.VK_RIGHT:
-					car1.turnRight();
+					player.turnRight();
 					break;
 				case KeyEvent.VK_UP:
-					car1.gas(0.4);
+					player.gas(0.4);
 					break;
 				case KeyEvent.VK_DOWN:
-					car1.brake(0.7);
+					player.brake(0.7);
 					break;
 				case KeyEvent.VK_SPACE:
-					car1.startEngine();
+					player.startEngine();
+					break;
+				case KeyEvent.VK_Z:
+					if(player instanceof Saab95){
+						((Saab95)player).setTurboOn();
+					}
+					if(player instanceof CarTransporter<?>){
+						for(Physical obj : objs){
+							if(obj instanceof StandardCar){
+								System.out.println(((CarTransporter<StandardCar>)player).add((StandardCar)obj));
+							}
+						}
+					}
+					break;
+				case KeyEvent.VK_X:
+					if(player instanceof Saab95){
+						((Saab95)player).setTurboOff();
+					}
+					if(player instanceof CarTransporter<?>){
+						System.out.println(((CarTransporter<StandardCar>)player).remove());
+					}
 					break;
 				case KeyEvent.VK_R:
 					this.restart();
 					break;
+				case KeyEvent.VK_1:
+					selectPlayer(0);
+					break;
+				case KeyEvent.VK_2:
+					selectPlayer(1);
+					break;
+				case KeyEvent.VK_3:
+					selectPlayer(2);
+					break;
+				case KeyEvent.VK_4:
+					selectPlayer(3);
+					break;
+				case KeyEvent.VK_5:
+					selectPlayer(4);
+					break;
+				case KeyEvent.VK_6:
+					selectPlayer(5);
+					break;
+				case KeyEvent.VK_7:
+					selectPlayer(6);
+					break;
+				case KeyEvent.VK_8:
+					selectPlayer(7);
+					break;
+				case KeyEvent.VK_9:
+					selectPlayer(8);
+					break;
 			}
 		}
 
+		void selectPlayer(int n){
+			if(objs.size() > n){
+				Physical obj = objs.get(n);
+				if(obj instanceof Vehicle){
+					player = (Vehicle)obj;
+				}
+			}
+		}
+		
 		@Override
 		public void keyReleased(KeyEvent e){}
 
@@ -119,7 +220,11 @@ class Gui{
 
 		@Override
 		public void actionPerformed(ActionEvent a){
-			car1.move();
+			for(Physical obj : objs){
+				if(obj instanceof Movable){
+					((Movable)obj).move();
+				}
+			}
 		}
 	}
 

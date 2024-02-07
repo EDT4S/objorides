@@ -1,7 +1,5 @@
 package dit954lab;
 
-import vector2d.Vector2d;
-
 public interface Movable{
 	/**
 	 * Moves something in its current speed and direction that it is facing.
