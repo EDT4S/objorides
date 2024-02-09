@@ -168,4 +168,37 @@ public interface Container<T>{
 			return false;
 		}
     }
+
+	class Bounded<T,C extends Container<T>> implements Container<T>{
+		protected final C inner;
+		protected final int maxSize;
+		
+		public Bounded(C inner,int maxSize){
+			this.inner = inner;
+			this.maxSize = maxSize;
+		}
+
+		@Override
+		public boolean add(T item) {
+			if(this.size() < this.maxSize){
+				return this.inner.add(item);
+			}
+			return false;
+		}
+
+		@Override
+		public T remove() {
+			return this.inner.remove();
+		}
+
+		@Override
+		public int size() {
+			return this.inner.size();
+		}
+
+		@Override
+		public boolean contains(T item) {
+			return this.inner.contains(item);
+		}
+	}
 }

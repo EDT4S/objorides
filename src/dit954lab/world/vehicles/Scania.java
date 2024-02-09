@@ -4,13 +4,17 @@ import java.awt.Color;
 
 import dit954lab.world.vehicles.addons.Flak;
 import dit954lab.world.vehicles.addons.GradualFlak;
+import dit954lab.world.StandardFlak;
 import vector2d.Coord;
 
-public class Scania extends StandardCar implements Flak.Wrapped<Double>{
+public class Scania
+	extends StandardCar
+	implements StandardFlak.WithMovable<Double>
+{
     protected Flak<Double> flak;
     
 	public Scania(Coord position,double angle){
-		super(position,angle,2,200,Color.black,"Scania");
+		super(position,angle,2,200,Color.gray,"Scania");
 		this.flak = new GradualFlak(0,70);
 	}
 
@@ -21,10 +25,4 @@ public class Scania extends StandardCar implements Flak.Wrapped<Double>{
 
 	@Override
 	public Flak<Double> getFlak(){return flak;}
-
-	@Override
-	public boolean openFlak(Double angle){
-		if(isMoving()) return false;
-		return Flak.Wrapped.super.openFlak(angle);
-	}
 }

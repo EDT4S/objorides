@@ -1,28 +1,25 @@
 package dit954lab.world.vehicles;
 
-import java.awt.Color;
-
-import util.Container;
-import util.Unit;
 import dit954lab.Placable;
 import dit954lab.world.StandardFlak;
 import dit954lab.world.vehicles.addons.BooleanFlak;
 import dit954lab.world.vehicles.addons.Flak;
+import util.Container;
+import util.Unit;
 import vector2d.Coord;
-import vector2d.Vector2d;
 
-public class CarTransporter<C extends Placable & Car>
-	extends StandardCar
+public class CarFerry<C extends Placable & Car>
+	extends StandardVehicle
 	implements StandardFlak.WithContainer<C,Unit>,
 	           StandardFlak.WithMovable<Unit>
 {
 	protected Flak<Unit> flak;
     protected Container<C> container;
     
-	public CarTransporter(Coord position,double angle){
-		super(position,angle,2,400,Color.blue,"Biltransport");
+	public CarFerry(Coord position,double angle){
+		super(position,angle,400,"Bilfärja");
 		this.flak = new BooleanFlak();
-		this.container = new Container.Bounded<>(new Container.Stack<>(new java.util.Stack<>()),2);
+		this.container = new Container.Queue<>(new java.util.ArrayDeque<>());
 	}
 
 	@Override
@@ -32,9 +29,4 @@ public class CarTransporter<C extends Placable & Car>
 
 	@Override public Flak<Unit> getFlak(){return flak;}
 	@Override public Container<C> getContainer(){return container;}
-
-	@Override
-	public boolean place(Vector2d<Double> pos){
-		return false;
-	}
 }

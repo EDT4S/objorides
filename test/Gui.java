@@ -13,12 +13,15 @@ import dit954lab.Movable;
 import dit954lab.Physical;
 import dit954lab.world.CarRepairShop;
 import dit954lab.world.vehicles.Car;
+import dit954lab.world.vehicles.CarFerry;
 import dit954lab.world.vehicles.CarTransporter;
 import dit954lab.world.vehicles.Saab95;
 import dit954lab.world.vehicles.Scania;
 import dit954lab.world.vehicles.StandardCar;
 import dit954lab.world.vehicles.Vehicle;
 import dit954lab.world.vehicles.Volvo240;
+import dit954lab.world.vehicles.addons.Flak;
+import util.Container;
 import vector2d.Coord;
 
 class Gui{
@@ -42,7 +45,7 @@ class Gui{
 		 */
 		public static final Color colorWithAlpha(Color c,int alpha){
 			//Converts an RGB integer to an RGBA integer by copying the bits of alpha to the alpha channel.
-			return new Color((c.getRGB() | 0b11111111_00000000_00000000_00000000) & (alpha << 24),true);
+			return new Color((c.getRGB() & 0b00000000_11111111_11111111_11111111) | (alpha << 24),true);
 		}
 
 		protected void paintInterface(Graphics g){
@@ -60,6 +63,9 @@ class Gui{
 			if(this.thing.player instanceof Saab95){
 				g.drawString("Turbo: " + Boolean.toString(((Saab95)this.thing.player).isTurboOn()),0,h * 5);
 			}
+			if(this.thing.player instanceof Flak<?>){
+				g.drawString("Flak: closed=" + Boolean.toString(((Flak<?>)this.thing.player).isFlakClosed()) + " , open=" + Boolean.toString(((Flak<?>)this.thing.player).isFlakOpen()),0,h * 6);
+			}
 		}
 
 		protected void paintVehicle(Graphics g,Physical obj){
@@ -75,8 +81,8 @@ class Gui{
 				g.fillRect((int)x-8,(int)y-8,16,16);
 			}
 			g.setColor(Color.BLACK);
-			g.drawLine((int)x,(int)y,(int)(x+dx/scale*4),(int)(y+dy/scale*4));
 			g.drawRect((int)x-8,(int)y-8,16,16);
+			g.drawLine((int)x,(int)y,(int)(x+dx/scale*4),(int)(y+dy/scale*4));
 			if(obj instanceof Vehicle){
 				g.drawString(((Vehicle)obj).getModelName(),(int)x,(int)y - h);
 			}
@@ -128,6 +134,7 @@ class Gui{
 			objs.add(new Volvo240(new Coord(1000,3000),0));
 			objs.add(new Volvo240(new Coord(3000,3000),0));
 			objs.add(new CarRepairShop<Volvo240>(2,new Coord(5000,3000)));
+			objs.add(new CarFerry<StandardCar>(new Coord(7000,3000),0));
 		}
 
 		@SuppressWarnings("unchecked")
@@ -154,10 +161,10 @@ class Gui{
 					if(player instanceof Saab95){
 						((Saab95)player).setTurboOn();
 					}
-					if(player instanceof CarTransporter<?>){
+					else if(player instanceof Container<?>){
 						for(Physical obj : objs){
 							if(obj instanceof StandardCar){
-								System.out.println(((CarTransporter<StandardCar>)player).add((StandardCar)obj));
+								System.out.println(((Container<StandardCar>)player).add((StandardCar)obj));
 							}
 						}
 					}
@@ -166,8 +173,18 @@ class Gui{
 					if(player instanceof Saab95){
 						((Saab95)player).setTurboOff();
 					}
-					if(player instanceof CarTransporter<?>){
-						System.out.println(((CarTransporter<StandardCar>)player).remove());
+					else if(player instanceof Container<?>){
+						System.out.println(((Container<StandardCar>)player).remove());
+					}
+					break;
+				case KeyEvent.VK_HOME:
+					if(player instanceof Flak<?>){
+						((Flak<?>)player).openFlak();
+					}
+					break;
+				case KeyEvent.VK_END:
+					if(player instanceof Flak<?>){
+						((Flak<?>)player).closeFlak();
 					}
 					break;
 				case KeyEvent.VK_R:
