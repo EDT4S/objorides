@@ -3,6 +3,8 @@ import java.util.Random;
 import org.junit.Test;
 import vector2d.Coord;
 import vector2d.Polar;
+import vector2d.Vector2d;
+import vector2d.View;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -155,5 +157,39 @@ public class Vector {
 		assertEquals(p1.getY(),p2.getY(),0.001);
 		assertEquals(p1.getMagnitude(),p2.getMagnitude(),0.001);
 		assertEquals(p1.getAngle(),Polar.normalizeAngle(p2.getAngle()),0.001);
+	}
+
+	public void eq(Vector2d<Double> v1, Vector2d<Double> v2){
+		assertEquals(v1.getX(),v2.getX(),0.0);
+		assertEquals(v1.getY(),v2.getY(),0.0);
+		assertEquals(v1.getAngle(),v2.getAngle(),0.0);
+		assertEquals(v1.getMagnitude(),v2.getMagnitude(),0.0);
+		assertEquals(v1.distance(v2),0.0,0.0001);
+		assertEquals(v2.distance(v1),0.0,0.0001);
+	}
+
+	@Test
+	public void testView(){
+		var v1 = new Coord(25.2,85.5);
+		var v2 = new View<>(v1);
+		eq(v1,v2);
+		v2.setX(500.0);
+		eq(v1,v2);
+		v2.setY(500.0);
+		eq(v1,v2);
+		v2.setAngle(0.8);
+		eq(v1,v2);
+		v2.setMagnitude(500.0);
+		eq(v1,v2);
+		v2.assign(new Coord(0,0));
+		eq(v1,v2);
+		v2.add(v1);
+		eq(v1,v2);
+		v2.scale(4.0);
+		eq(v1,v2);
+		v2.turn(0.8);
+		eq(v1,v2);
+		v2.oppose();
+		eq(v1,v2);
 	}
 }

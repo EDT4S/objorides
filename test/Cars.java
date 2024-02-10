@@ -167,6 +167,7 @@ public class Cars {
 
 		car.startEngine();
 		car.setTurboOn();
+		assertTrue(car.isTurboOn());
 		car.gas(1.0);
 		car.move();
 		double spd1 = car.getCurrentSpeed();
@@ -174,6 +175,7 @@ public class Cars {
 
 		car.startEngine();
 		car.setTurboOff();
+		assertFalse(car.isTurboOn());
 		car.gas(1.0);
 		car.move();
 		double spd2 = car.getCurrentSpeed();

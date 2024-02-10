@@ -11,8 +11,8 @@ import vector2d.Coord;
 import vector2d.Vector2d;
 
 public class CarRepairShop<C extends Car & Placable>
-	implements Container.Wrapped<C>,
-	           Flak.Wrapped<Unit>,
+	implements Container.Has<C>,
+	           Flak.Has<Unit>,
 	           Physical
 {
 	protected Addon<C> addon;

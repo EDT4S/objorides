@@ -261,6 +261,57 @@ public class Transporters {
         flakTest(car.getFlak());
         unitFlakTest(car.getFlak());
         vehicleFlakTest(car);
+
+        //Cannot add when flak is closed.
+        car.stopEngine();
+        car.getFlak().closeFlak();
+        containerCannotAddTest(car.getContainer(),new Volvo240(new Coord(0,0),0));
+
+        //Cannot add when moving.
+        car.startEngine();
+        car.gas(1.0);
+        containerCannotAddTest(car.getContainer(),new Volvo240(new Coord(0,0),0));
+
+        car.stopEngine();
+        car.getFlak().openFlak();
+        Volvo240[] cs = {
+                new Volvo240(new Coord(0.00001,-1.0),0.2),
+                new Volvo240(new Coord(0.0001,-0.01),0.4),
+                new Volvo240(new Coord(0.001,-0.001),0.6),
+        };
+        containerAddTest(car.getContainer(),cs);
+        containerCannotAddTest(car.getContainer(),new Volvo240(new Coord(0,0),0));
+
+        //Move around a bit.
+        car.gas(1.0);
+        car.move();
+        car.stopEngine();
+
+        Collections.reverse(Arrays.asList(cs));
+        containerRemoveTest(car.getContainer(),cs);
+
+        //Removed at the same location.
+        for(var c : cs) {
+            assertEquals(c.getPosition().getX(), car.getPosition().getX(), 0.000001);
+            assertEquals(c.getPosition().getY(), car.getPosition().getY(), 0.000001);
+        }
+
+        //Can add after removals.
+        Volvo240[] cs2 = {
+                new Volvo240(new Coord(car.getPosition()), 0.2),
+        };
+        containerAddTest(car.getContainer(),cs2);
+
+        //Cannot add too far away
+        containerCannotAddTest(car.getContainer(),new Volvo240(new Coord(100000,100000),50));
+
+        //Cannot remove when flak is closed.
+        car.getFlak().closeFlak();
+        assertNull(car.getContainer().remove());
+
+        //Cannot remove when moving.
+        car.gas(1.0);
+        assertNull(car.getContainer().remove());
     }
 
     @Test
@@ -274,7 +325,21 @@ public class Transporters {
     @Test
     public void carRepairShopFlak(){
         var car = new CarRepairShop<Saab95>(2,new Coord(0.0,0.0));
+        assertEquals(car.getVelocity().getX(), 0.0, 0.0);
+        assertEquals(car.getVelocity().getY(), 0.0, 0.0);
+
         flakTest(car.getFlak());
         unitFlakTest(car.getFlak());
+
+        car.getFlak().openFlak();
+
+        Saab95[] cs = {
+                new Saab95(new Coord(0.00001,-1.0),0.2),
+                new Saab95(new Coord(0.0001,-0.01),0.4),
+        };
+        containerAddTest(car.getContainer(),cs);
+        containerCannotAddTest(car.getContainer(),new Saab95(new Coord(car.getPosition()),0.0));
+        Collections.reverse(Arrays.asList(cs));
+        containerRemoveTest(car.getContainer(),cs);
     }
 }
