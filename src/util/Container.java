@@ -34,8 +34,11 @@ public interface Container<T>{
     
     boolean contains(T item);
 
-    interface Wrapped<T> extends Container<T>{
-    	Container<T> getContainer();
+	interface Has<T>{
+		Container<T> getContainer();
+	}
+
+    interface Wrapped<T> extends Container<T>,Has<T>{
     	default boolean add(T item){return getContainer().add(item);}
         default T remove(){return getContainer().remove();}
         default boolean isEmpty(){return getContainer().isEmpty();}

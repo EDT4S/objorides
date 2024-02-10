@@ -7,7 +7,7 @@ import vector2d.Polar;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class JUnitVector{
+public class Vector {
 	Random rand = new Random();
 
 	@Test

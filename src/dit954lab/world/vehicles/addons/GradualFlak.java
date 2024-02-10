@@ -37,12 +37,14 @@ public class GradualFlak implements Flak<Double>{
 
 	@Override
 	public boolean closeFlak(){
+		if(isFlakClosed()) return false;
 		angle = angleMin;
 		return true;
 	}
 
 	@Override
 	public boolean openFlak(){
+		if(isFlakOpen()) return false;
 		angle = angleMax;
 		return true;
 	}

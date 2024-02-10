@@ -6,10 +6,9 @@ import dit954lab.world.vehicles.Volvo240;
 import org.junit.Test;
 import vector2d.Coord;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class JUnitCars {
+public class Cars {
 	@Test
 	public void gasUpperLimit(){
 		Car car;
@@ -195,5 +194,18 @@ public class JUnitCars {
 			assertTrue(car.getCurrentSpeed() > prevSpd);
 		}while(car.getCurrentSpeed() < car.getEnginePower());
 		assertEquals(car.getCurrentSpeed(),car.getEnginePower(),0.0);
+	}
+
+
+	@Test
+	public void stopMoving() {
+		Volvo240 car = new Volvo240(new Coord(5.0,3.0),0);
+
+		car.startEngine();
+		car.gas(1.0);
+		car.move();
+		assertTrue(car.isMoving());
+		car.stopEngine();
+		assertFalse(car.isMoving());
 	}
 }

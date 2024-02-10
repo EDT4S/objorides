@@ -6,15 +6,15 @@ import dit954lab.Movable;
 import dit954lab.world.vehicles.addons.Flak;
 import dit954lab.world.vehicles.addons.GradualFlak;
 import dit954lab.world.StandardFlak;
+import dit954lab.world.StandardFlak.*;
 import vector2d.Coord;
 
 public class Scania
-	extends StandardCar
-	implements Flak.Wrapped<Double>
+	extends FlakStandardCar<Double>
+	implements Flak.Has<Double>
 {
     protected Addon addon = new Addon(this,new GradualFlak(0,70));
 	public Scania(Coord position,double angle){super(position,angle,2,200,Color.gray,"Scania");}
-	@Override public void gas(double amount){if(isFlakClosed()) super.gas(amount);}
 	@Override public Flak<Double> getFlak(){return addon;}
 
 	public record Addon(Movable getMovable,Flak<Double> getFlak)

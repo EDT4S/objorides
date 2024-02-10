@@ -8,8 +8,11 @@ public interface Flak<U>{
 	boolean closeFlak(U u);
 	boolean openFlak(U u);
 
-	interface Wrapped<U> extends Flak<U>{
+	interface Has<U>{
 		Flak<U> getFlak();
+	}
+
+	interface Wrapped<U> extends Flak<U>,Has<U>{
 		@Override default boolean isFlakClosed(){return getFlak().isFlakClosed();}
 		@Override default boolean isFlakOpen(){return getFlak().isFlakOpen();}
 		@Override default boolean closeFlak(){return getFlak().closeFlak();}

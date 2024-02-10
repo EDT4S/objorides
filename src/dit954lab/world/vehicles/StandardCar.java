@@ -35,8 +35,7 @@ public class StandardCar extends StandardVehicle implements Car,Placable{
 		return nrDoors;
 	}
 
-	public boolean place(Vector2d<Double> pos){
+	public void place(Vector2d<Double> pos){
 		this.position = pos;
-		return true;
 	}
 }

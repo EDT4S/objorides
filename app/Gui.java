@@ -63,8 +63,8 @@ class Gui{
 			if(this.thing.player instanceof Saab95){
 				g.drawString("Turbo: " + Boolean.toString(((Saab95)this.thing.player).isTurboOn()),0,h * 5);
 			}
-			if(this.thing.player instanceof Flak<?>){
-				g.drawString("Flak: closed=" + Boolean.toString(((Flak<?>)this.thing.player).isFlakClosed()) + " , open=" + Boolean.toString(((Flak<?>)this.thing.player).isFlakOpen()),0,h * 6);
+			if(this.thing.player instanceof Flak.Has<?>){
+				g.drawString("Flak: closed=" + Boolean.toString(((Flak.Has<?>)this.thing.player).getFlak().isFlakClosed()) + " , open=" + Boolean.toString(((Flak.Has<?>)this.thing.player).getFlak().isFlakOpen()),0,h * 6);
 			}
 		}
 
@@ -126,7 +126,7 @@ class Gui{
 
 		public void restart(){
 			player = new Volvo240(new Coord(1000,1000),0);
-			objs = new ArrayList<>(5);
+			objs = new ArrayList<>(10);
 			objs.add(player);
 			objs.add(new Saab95(new Coord(3000,1000),0));
 			objs.add(new Scania(new Coord(5000,1000),0));
@@ -161,10 +161,10 @@ class Gui{
 					if(player instanceof Saab95){
 						((Saab95)player).setTurboOn();
 					}
-					else if(player instanceof Container<?>){
+					else if(player instanceof Container.Has<?>){
 						for(Physical obj : objs){
 							if(obj instanceof StandardCar){
-								System.out.println(((Container<StandardCar>)player).add((StandardCar)obj));
+								System.out.println(((Container.Has<StandardCar>)player).getContainer().add((StandardCar)obj));
 							}
 						}
 					}
@@ -173,18 +173,18 @@ class Gui{
 					if(player instanceof Saab95){
 						((Saab95)player).setTurboOff();
 					}
-					else if(player instanceof Container<?>){
-						System.out.println(((Container<StandardCar>)player).remove());
+					else if(player instanceof Container.Has<?>){
+						System.out.println(((Container.Has<StandardCar>)player).getContainer().remove());
 					}
 					break;
 				case KeyEvent.VK_HOME:
-					if(player instanceof Flak<?>){
-						((Flak<?>)player).openFlak();
+					if(player instanceof Flak.Has<?>){
+						((Flak.Has<?>)player).getFlak().openFlak();
 					}
 					break;
 				case KeyEvent.VK_END:
-					if(player instanceof Flak<?>){
-						((Flak<?>)player).closeFlak();
+					if(player instanceof Flak.Has<?>){
+						((Flak.Has<?>)player).getFlak().closeFlak();
 					}
 					break;
 				case KeyEvent.VK_R:
