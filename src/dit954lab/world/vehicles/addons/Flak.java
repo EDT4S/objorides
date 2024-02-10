@@ -8,7 +8,7 @@ public interface Flak<U>{
 	boolean closeFlak(U u);
 	boolean openFlak(U u);
 
-	public static interface Wrapped<U> extends Flak<U>{
+	interface Wrapped<U> extends Flak<U>{
 		Flak<U> getFlak();
 		@Override default boolean isFlakClosed(){return getFlak().isFlakClosed();}
 		@Override default boolean isFlakOpen(){return getFlak().isFlakOpen();}

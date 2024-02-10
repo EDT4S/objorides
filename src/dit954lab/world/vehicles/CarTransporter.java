@@ -22,7 +22,7 @@ public class CarTransporter<C extends Placable & Car>
 	public CarTransporter(Coord position,double angle){
 		super(position,angle,2,400,Color.blue,"Biltransport");
 		this.flak = new BooleanFlak();
-		this.container = new Container.Bounded<>(new Container.Stack<>(new java.util.Stack<>()),2);
+		this.container = new Container.Array<>(2);
 	}
 
 	@Override

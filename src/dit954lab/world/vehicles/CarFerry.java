@@ -19,7 +19,7 @@ public class CarFerry<C extends Placable & Car>
 	public CarFerry(Coord position,double angle){
 		super(position,angle,400,"Bilfärja");
 		this.flak = new BooleanFlak();
-		this.container = new Container.Queue<>(new java.util.ArrayDeque<>());
+		this.container = new Container.Queue<>(new java.util.concurrent.ArrayBlockingQueue<>(5));
 	}
 
 	@Override

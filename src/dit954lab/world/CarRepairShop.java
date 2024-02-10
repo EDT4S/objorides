@@ -19,7 +19,7 @@ public class CarRepairShop<C extends Car & Placable>
 
 	public CarRepairShop(int size,Vector2d<Double> position){
 		this.container = new Container.Array<>(size);
-		this.flak= new BooleanFlak();
+		this.flak = new BooleanFlak();
 		this.position = position;
 	}
 
