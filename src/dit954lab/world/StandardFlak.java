@@ -11,7 +11,7 @@ import vector2d.View;
 public final class StandardFlak{
 	private StandardFlak(){}
 
-	public static interface WithContainer<Obj extends Placable & Physical,F>
+	public interface WithContainer<Obj extends Placable,F>
 		extends Physical,
 		        Flak<F>,
 		        Container.Wrapped<Obj>
@@ -28,6 +28,8 @@ public final class StandardFlak{
 			|| contains(obj) //Have already picked up the object
 			|| !obj.place(new View<>(this.getPosition()))) //Cannot place the object on the container
 				return false;
+			//TODO: If two objects calls place on one object, then it is in two containers. Maybe an unplace function should also be provided to place?
+			//TODO: If add fails, then place should also fail.
 			return Container.Wrapped.super.add(obj);
 		}
 	
@@ -40,7 +42,7 @@ public final class StandardFlak{
 		}
 	}
 
-	public static interface WithMovable<F>
+	public interface WithMovable<F>
 		extends Flak.Wrapped<F>,
 		        Movable
 	{
