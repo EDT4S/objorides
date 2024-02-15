@@ -26,7 +26,6 @@ import vector2d.Coord;
 
 class Gui{
 	public static final class DrawPanel extends JPanel implements ActionListener{
-		private static final long serialVersionUID = -1544594115852711561L;
 		private static final double scale = 20.0;
 
 		private Thing thing;

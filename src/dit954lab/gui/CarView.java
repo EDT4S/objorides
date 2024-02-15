@@ -10,15 +10,11 @@ import java.awt.*;
  * It initializes with being center on the screen and attaching it's controller in it's state.
  * It communicates with the Controller by calling methods of it when an action fires of in
  * each of it's components.
- * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public abstract class CarView extends JFrame{
     private static final int X = 860;
     private static final int Y = 800;
-
-    // The controller member
-    CarController carC;
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
@@ -40,8 +36,7 @@ public class CarView extends JFrame{
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename, CarController cc){
-        this.carC = cc;
+    public CarView(String framename){
         initComponents(framename);
     }
 
@@ -99,16 +94,14 @@ public class CarView extends JFrame{
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
-        // This actionListener is for the gas button only
-        // TODO: Create more for each component as necessary
-        gasButton.addActionListener(e -> carC.gas(gasAmount));
-        brakeButton.addActionListener(e -> carC.brake(gasAmount));
-        turboOnButton.addActionListener(e -> carC.turboOn());
-        turboOffButton.addActionListener(e -> carC.turboOff());
-        liftBedButton.addActionListener(e -> carC.liftBed());
-        lowerBedButton.addActionListener(e -> carC.lowerBed());
-        startButton.addActionListener(e -> carC.start());
-        stopButton.addActionListener(e -> carC.stop());
+        gasButton.addActionListener(e -> onGasButton(gasAmount));
+        brakeButton.addActionListener(e -> onBreakButton(gasAmount));
+        turboOnButton.addActionListener(e -> onTurboOnButton());
+        turboOffButton.addActionListener(e -> onTurboOffButton());
+        liftBedButton.addActionListener(e -> onLiftBedButton());
+        lowerBedButton.addActionListener(e -> onLowerBedButton());
+        startButton.addActionListener(e -> onStartButton());
+        stopButton.addActionListener(e -> onStopButton());
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
@@ -122,4 +115,13 @@ public class CarView extends JFrame{
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+    public abstract void onGasButton(int gasAmount);
+    public abstract void onBreakButton(int gasAmount);
+    public abstract void onTurboOnButton();
+    public abstract void onTurboOffButton();
+    public abstract void onLiftBedButton();
+    public abstract void onLowerBedButton();
+    public abstract void onStartButton();
+    public abstract void onStopButton();
 }

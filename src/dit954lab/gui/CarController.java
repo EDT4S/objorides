@@ -46,7 +46,63 @@ public class CarController {
         cc.cars.add(cc.car3);
 
         // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
+        cc.frame = new CarView("CarSim 1.0"){
+            @Override
+            public void onGasButton(int amount){
+                double gas = ((double) amount) / 100;
+                for (Car car : cc.cars) {
+                    car.gas(gas);
+                }
+            }
+
+            @Override
+            public void onBreakButton(int amount){
+                double gas = ((double) amount) / 100;
+                for (Car car : cc.cars) {
+                    car.brake(gas);
+                }
+            }
+
+            @Override
+            public void onTurboOnButton(){
+                cc.car2.setTurboOn();
+                System.out.println("Saab95 turbo set to on");
+            }
+
+            @Override
+            public void onTurboOffButton(){
+                cc.car2.setTurboOff();
+                System.out.println("Saab95 turbo set to off");
+            }
+
+            @Override
+            public void onLiftBedButton(){
+                if(cc.car3.getFlak().openFlak()){
+                    System.out.println("Scania flak lifted");
+                }
+            }
+
+            @Override
+            public void onLowerBedButton(){
+                if(cc.car3.getFlak().closeFlak()){
+                    System.out.println("Scania flak lowered");
+                }
+            }
+
+            @Override
+            public void onStartButton(){
+                for (Car car : cc.cars) {
+                    car.stopEngine();
+                }
+            }
+
+            @Override
+            public void onStopButton(){
+                for (Car car : cc.cars) {
+                    car.stopEngine();
+                }
+            }
+        };
 
         // Start the timer
         cc.timer.start();
@@ -66,54 +122,6 @@ public class CarController {
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
-        }
-    }
-
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Car car : cars) {
-            car.gas(gas);
-        }
-    }
-
-    // Calls the brake method for each car once
-    void brake(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Car car : cars
-        ) {
-            car.brake(gas);
-        }
-    }
-
-    void turboOn(){
-        car2.setTurboOn();
-        System.out.println("Saab95 turbo set to on");
-    }
-    void turboOff(){
-        car2.setTurboOff();
-        System.out.println("Saab95 turbo set to off");
-    }
-    void liftBed(){
-        if(car3.getFlak().openFlak()){
-            System.out.println("Scania flak lifted");
-        }
-    }
-    void lowerBed(){
-        if(car3.getFlak().closeFlak()){
-            System.out.println("Scania flak lowered");
-        }
-    }
-
-    void start() {
-        for (Car car : cars) {
-            car.stopEngine();
-        }
-    }
-
-    void stop() {
-        for (Car car : cars) {
-            car.stopEngine();
         }
     }
 }
