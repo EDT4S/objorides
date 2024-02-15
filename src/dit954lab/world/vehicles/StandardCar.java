@@ -1,10 +1,10 @@
 package dit954lab.world.vehicles;
 
-import java.awt.*;
-
 import dit954lab.Placable;
 import vector2d.Coord;
 import vector2d.Vector2d;
+
+import java.awt.*;
 
 public class StandardCar extends StandardVehicle implements Car,Placable{
 	/**

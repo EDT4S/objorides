@@ -3,7 +3,7 @@ package dit954lab.world.vehicles;
 import dit954lab.Movable;
 import dit954lab.Placable;
 import dit954lab.world.StandardFlak;
-import dit954lab.world.StandardFlak.*;
+import dit954lab.world.StandardFlak.FlakStandardVehicle;
 import dit954lab.world.vehicles.addons.BooleanFlak;
 import dit954lab.world.vehicles.addons.Flak;
 import util.Container;

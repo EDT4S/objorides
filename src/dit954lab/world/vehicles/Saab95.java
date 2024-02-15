@@ -1,8 +1,8 @@
 package dit954lab.world.vehicles;
 
-import java.awt.*;
-
 import vector2d.Coord;
+
+import java.awt.*;
 
 public class Saab95 extends StandardCar{
 	protected boolean turboOn;

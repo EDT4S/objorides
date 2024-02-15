@@ -1,13 +1,13 @@
 package dit954lab.world.vehicles;
 
-import java.awt.Color;
-
 import dit954lab.Movable;
+import dit954lab.world.StandardFlak;
+import dit954lab.world.StandardFlak.FlakStandardCar;
 import dit954lab.world.vehicles.addons.Flak;
 import dit954lab.world.vehicles.addons.GradualFlak;
-import dit954lab.world.StandardFlak;
-import dit954lab.world.StandardFlak.*;
 import vector2d.Coord;
+
+import java.awt.*;
 
 public class Scania
 	extends FlakStandardCar<Double>

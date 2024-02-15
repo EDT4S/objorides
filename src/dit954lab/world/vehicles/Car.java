@@ -1,6 +1,6 @@
 package dit954lab.world.vehicles;
 
-import java.awt.Color;
+import java.awt.*;
 
 public interface Car extends Vehicle{
 	/**

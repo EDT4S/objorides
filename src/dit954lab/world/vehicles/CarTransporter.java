@@ -1,16 +1,16 @@
 package dit954lab.world.vehicles;
 
-import java.awt.Color;
-
 import dit954lab.Movable;
-import util.Container;
-import util.Unit;
 import dit954lab.Placable;
 import dit954lab.world.StandardFlak;
-import dit954lab.world.StandardFlak.*;
+import dit954lab.world.StandardFlak.FlakStandardCar;
 import dit954lab.world.vehicles.addons.BooleanFlak;
 import dit954lab.world.vehicles.addons.Flak;
+import util.Container;
+import util.Unit;
 import vector2d.Coord;
+
+import java.awt.*;
 
 public class CarTransporter<C extends Placable & Car>
 	extends FlakStandardCar<Unit>

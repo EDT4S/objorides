@@ -1,8 +1,8 @@
 package dit954lab.world.vehicles;
 
-import java.awt.*;
-
 import vector2d.Coord;
+
+import java.awt.*;
 
 public class Volvo240 extends StandardCar{
 	public final static double trimFactor = 1.25;
