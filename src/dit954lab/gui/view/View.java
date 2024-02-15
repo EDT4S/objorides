@@ -6,13 +6,7 @@ import java.util.stream.Stream;
 
 public interface View{
 	void repaint();
-	void onGasButton(int gasAmount);
-	void onBreakButton(int gasAmount);
-	void onTurboOnButton();
-	void onTurboOffButton();
-	void onLiftBedButton();
-	void onLowerBedButton();
-	void onStartButton();
-	void onStopButton();
+
+	//TODO: Probably part of the model.
 	Stream<CarData> getCars();
 }

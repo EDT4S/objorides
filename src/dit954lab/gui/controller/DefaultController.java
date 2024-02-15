@@ -1,5 +1,6 @@
-package dit954lab.gui;
+package dit954lab.gui.controller;
 
+import dit954lab.gui.CarData;
 import dit954lab.gui.view.JFrameView;
 import dit954lab.gui.view.View;
 import dit954lab.world.vehicles.Car;
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
 * modifying the model state and the updating the view.
  */
 
-public class Controller{
+public class DefaultController implements Controller{
     // member fields:
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
@@ -38,74 +39,16 @@ public class Controller{
     Saab95 car2 = new Saab95(new Coord(0,100),0);
     Scania car3 = new Scania(new Coord(0,200),0);
 
-    //methods:
+    private DefaultController(){
+        cars.add(car1);
+        cars.add(car2);
+        cars.add(car3);
+    }
 
     public static void main(String[] args) {
         // Instance of this class
-        Controller cc = new Controller();
-
-        cc.cars.add(cc.car1);
-        cc.cars.add(cc.car2);
-        cc.cars.add(cc.car3);
-
-        // Start a new view and send a reference of self
-        cc.frame = new JFrameView("CarSim 1.0"){
-            @Override
-            public void onGasButton(int amount){
-                double gas = ((double) amount) / 100;
-                for (Car car : cc.cars) {
-                    car.gas(gas);
-                }
-            }
-
-            @Override
-            public void onBreakButton(int amount){
-                double gas = ((double) amount) / 100;
-                for (Car car : cc.cars) {
-                    car.brake(gas);
-                }
-            }
-
-            @Override
-            public void onTurboOnButton(){
-                cc.car2.setTurboOn();
-                System.out.println("Saab95 turbo set to on");
-            }
-
-            @Override
-            public void onTurboOffButton(){
-                cc.car2.setTurboOff();
-                System.out.println("Saab95 turbo set to off");
-            }
-
-            @Override
-            public void onLiftBedButton(){
-                if(cc.car3.getFlak().openFlak()){
-                    System.out.println("Scania flak lifted");
-                }
-            }
-
-            @Override
-            public void onLowerBedButton(){
-                if(cc.car3.getFlak().closeFlak()){
-                    System.out.println("Scania flak lowered");
-                }
-            }
-
-            @Override
-            public void onStartButton(){
-                for (Car car : cc.cars) {
-                    car.stopEngine();
-                }
-            }
-
-            @Override
-            public void onStopButton(){
-                for (Car car : cc.cars) {
-                    car.stopEngine();
-                }
-            }
-
+        DefaultController cc = new DefaultController();
+        cc.frame = new JFrameView("CarSim 1.0",cc){
             @Override
             public Stream<CarData> getCars(){
                 return cc.cars.stream().map(car -> new CarData(
@@ -125,12 +68,66 @@ public class Controller{
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (int i=0; i<cars.size(); i++) {
-                Car car = cars.get(i);
+            for (Car car : cars) {
                 car.move();
-                // repaint() calls the paintComponent method of the panel
                 frame.repaint();
             }
+        }
+    }
+
+    @Override
+    public void gas(int amount){
+        double gas = ((double) amount) / 100;
+        for (Car car : this.cars) {
+            car.gas(gas);
+        }
+    }
+
+    @Override
+    public void brake(int amount){
+        double gas = ((double) amount) / 100;
+        for (Car car : this.cars) {
+            car.brake(gas);
+        }
+    }
+
+    @Override
+    public void turboOn(){
+        this.car2.setTurboOn();
+        System.out.println("Saab95 turbo set to on");
+    }
+
+    @Override
+    public void turboOff(){
+        this.car2.setTurboOff();
+        System.out.println("Saab95 turbo set to off");
+    }
+
+    @Override
+    public void liftBed(){
+        if(this.car3.getFlak().openFlak()){
+            System.out.println("Scania flak lifted");
+        }
+    }
+
+    @Override
+    public void lowerBed(){
+        if(this.car3.getFlak().closeFlak()){
+            System.out.println("Scania flak lowered");
+        }
+    }
+
+    @Override
+    public void start(){
+        for (Car car : this.cars) {
+            car.stopEngine();
+        }
+    }
+
+    @Override
+    public void stop(){
+        for (Car car : this.cars) {
+            car.stopEngine();
         }
     }
 }
