@@ -1,4 +1,6 @@
-package dit954lab.gui;
+package dit954lab.gui.view;
+
+import dit954lab.gui.CarData;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,7 +30,7 @@ public abstract class DrawPanel extends JPanel{
 		}
 	}
 
-	public abstract Stream<CarViewData> getCars();
+	public abstract Stream<CarData> getCars();
 
 	// This method is called each time the panel updates/refreshes/repaints itself
 	@Override

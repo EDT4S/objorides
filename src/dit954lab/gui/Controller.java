@@ -1,5 +1,7 @@
 package dit954lab.gui;
 
+import dit954lab.gui.view.JFrameView;
+import dit954lab.gui.view.View;
 import dit954lab.world.vehicles.Car;
 import dit954lab.world.vehicles.Saab95;
 import dit954lab.world.vehicles.Scania;
@@ -19,7 +21,7 @@ import java.util.stream.Stream;
 * modifying the model state and the updating the view.
  */
 
-public class CarController {
+public class Controller{
     // member fields:
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
@@ -29,7 +31,7 @@ public class CarController {
     private Timer timer = new Timer(delay, new TimerListener());
 
     // The frame that represents this instance View of the MVC pattern
-    CarView frame;
+    View frame;
     // A list of cars, modify if needed
     List<Car> cars = new ArrayList<>(3);
     Volvo240 car1 = new Volvo240(new Coord(0,0),0);
@@ -40,14 +42,14 @@ public class CarController {
 
     public static void main(String[] args) {
         // Instance of this class
-        CarController cc = new CarController();
+        Controller cc = new Controller();
 
         cc.cars.add(cc.car1);
         cc.cars.add(cc.car2);
         cc.cars.add(cc.car3);
 
         // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0"){
+        cc.frame = new JFrameView("CarSim 1.0"){
             @Override
             public void onGasButton(int amount){
                 double gas = ((double) amount) / 100;
@@ -105,8 +107,8 @@ public class CarController {
             }
 
             @Override
-            public Stream<CarViewData> getCars(){
-                return cc.cars.stream().map(car -> new CarViewData(
+            public Stream<CarData> getCars(){
+                return cc.cars.stream().map(car -> new CarData(
                     car.getModelName(),
                     (int) Math.round(car.getPosition().getX()),
                     (int) Math.round(car.getPosition().getY())

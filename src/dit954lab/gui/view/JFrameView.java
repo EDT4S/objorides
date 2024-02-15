@@ -1,4 +1,6 @@
-package dit954lab.gui;
+package dit954lab.gui.view;
+
+import dit954lab.gui.CarData;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -13,31 +15,31 @@ import java.util.stream.Stream;
  * each of it's components.
  **/
 
-public abstract class CarView extends JFrame{
+public abstract class JFrameView extends JFrame implements View{
     private static final int X = 860;
     private static final int Y = 800;
 
-    private DrawPanel drawPanel = new DrawPanel(X, Y-240){@Override public Stream<CarViewData> getCars(){return CarView.this.getCars();}};
+    protected DrawPanel drawPanel = new DrawPanel(X, Y-240){@Override public Stream<CarData> getCars(){return JFrameView.this.getCars();}};
 
-    private JPanel controlPanel = new JPanel();
+    protected JPanel controlPanel = new JPanel();
 
-    private JPanel gasPanel = new JPanel();
-    private JSpinner gasSpinner = new JSpinner();
-    private int gasAmount = 0;
-    private JLabel gasLabel = new JLabel("Amount of gas");
+    protected JPanel gasPanel = new JPanel();
+    protected JSpinner gasSpinner = new JSpinner();
+    protected int gasAmount = 0;
+    protected JLabel gasLabel = new JLabel("Amount of gas");
 
-    private JButton gasButton = new JButton("Gas");
-    private JButton brakeButton = new JButton("Brake");
-    private JButton turboOnButton = new JButton("Saab Turbo on");
-    private JButton turboOffButton = new JButton("Saab Turbo off");
-    private JButton liftBedButton = new JButton("Scania Lift Bed");
-    private JButton lowerBedButton = new JButton("Lower Lift Bed");
+    protected JButton gasButton = new JButton("Gas");
+    protected JButton brakeButton = new JButton("Brake");
+    protected JButton turboOnButton = new JButton("Saab Turbo on");
+    protected JButton turboOffButton = new JButton("Saab Turbo off");
+    protected JButton liftBedButton = new JButton("Scania Lift Bed");
+    protected JButton lowerBedButton = new JButton("Lower Lift Bed");
 
-    private JButton startButton = new JButton("Start all cars");
-    private JButton stopButton = new JButton("Stop all cars");
+    protected JButton startButton = new JButton("Start all cars");
+    protected JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename){
+    public JFrameView(String framename){
         initComponents(framename);
     }
 
@@ -117,18 +119,8 @@ public abstract class CarView extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    @Override
     public void repaint(){
         this.drawPanel.repaint();
     }
-
-    public abstract void onGasButton(int gasAmount);
-    public abstract void onBreakButton(int gasAmount);
-    public abstract void onTurboOnButton();
-    public abstract void onTurboOffButton();
-    public abstract void onLiftBedButton();
-    public abstract void onLowerBedButton();
-    public abstract void onStartButton();
-    public abstract void onStopButton();
-
-    public abstract Stream<CarViewData> getCars();
 }
