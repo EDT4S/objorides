@@ -5,18 +5,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Arrays;
 
 // This panel represents the animated part of the view with the car images.
 
 public class DrawPanel extends JPanel{
-	// Just a single image, TODO: Generalize
-	BufferedImage volvoImage;
-	// To keep track of a single car's position
-	Point volvoPoint = new Point();
-
-	BufferedImage volvoWorkshopImage;
-	Point volvoWorkshopPoint = new Point(300,300);
-
+	protected record CarDrawData(BufferedImage image,Point point){
+		public CarDrawData(BufferedImage image){this(image,new Point());}
+	}
+	protected java.util.List<CarDrawData> cars;
 	// Initializes the panel and reads the images
 	public DrawPanel(int x,int y){
 		this.setDoubleBuffered(true);
@@ -24,17 +21,21 @@ public class DrawPanel extends JPanel{
 		this.setBackground(Color.green);
 		// Print an error message in case file is not found with a try/catch block
 		try{
-			volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Volvo240.jpg"));
-			volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/VolvoBrand.jpg"));
+			this.cars = new java.util.ArrayList(Arrays.asList(
+				new CarDrawData(ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Volvo240.jpg"))),
+				new CarDrawData(ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Saab95.jpg"))),
+				new CarDrawData(ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Scania.jpg")))
+				//new CarDrawData(ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/VolvoBrand.jpg"))),
+			));
 		}catch(IOException ex){
 			ex.printStackTrace();
 		}
 	}
 
 	// TODO: Make this general for all cars
-	void moveit(int x,int y){
-		volvoPoint.x = x;
-		volvoPoint.y = y;
+	void moveit(int i,int x,int y){
+		cars.get(i).point.x = x;
+		cars.get(i).point.y = y;
 	}
 
 	// This method is called each time the panel updates/refreshes/repaints itself
@@ -42,7 +43,8 @@ public class DrawPanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-		g.drawImage(volvoImage,volvoPoint.x,volvoPoint.y,null); // see javadoc for more info on the parameters
-		g.drawImage(volvoWorkshopImage,volvoWorkshopPoint.x,volvoWorkshopPoint.y,null);
+		for(CarDrawData car : this.cars){
+			g.drawImage(car.image,car.point.x,car.point.y,null); // see javadoc for more info on the parameters
+		}
 	}
 }
