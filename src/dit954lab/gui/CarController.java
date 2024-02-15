@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -102,6 +103,15 @@ public class CarController {
                     car.stopEngine();
                 }
             }
+
+            @Override
+            public Stream<CarViewData> getCars(){
+                return cc.cars.stream().map(car -> new CarViewData(
+                    car.getModelName(),
+                    (int) Math.round(car.getPosition().getX()),
+                    (int) Math.round(car.getPosition().getY())
+                ));
+            }
         };
 
         // Start the timer
@@ -116,11 +126,8 @@ public class CarController {
             for (int i=0; i<cars.size(); i++) {
                 Car car = cars.get(i);
                 car.move();
-                int x = (int) Math.round(car.getPosition().getX());
-                int y = (int) Math.round(car.getPosition().getY());
-                frame.drawPanel.moveit(i,x,y);
                 // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
+                frame.repaint();
             }
         }
     }

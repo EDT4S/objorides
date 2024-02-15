@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.util.stream.Stream;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -16,24 +17,24 @@ public abstract class CarView extends JFrame{
     private static final int X = 860;
     private static final int Y = 800;
 
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
+    private DrawPanel drawPanel = new DrawPanel(X, Y-240){@Override public Stream<CarViewData> getCars(){return CarView.this.getCars();}};
 
-    JPanel controlPanel = new JPanel();
+    private JPanel controlPanel = new JPanel();
 
-    JPanel gasPanel = new JPanel();
-    JSpinner gasSpinner = new JSpinner();
-    int gasAmount = 0;
-    JLabel gasLabel = new JLabel("Amount of gas");
+    private JPanel gasPanel = new JPanel();
+    private JSpinner gasSpinner = new JSpinner();
+    private int gasAmount = 0;
+    private JLabel gasLabel = new JLabel("Amount of gas");
 
-    JButton gasButton = new JButton("Gas");
-    JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
+    private JButton gasButton = new JButton("Gas");
+    private JButton brakeButton = new JButton("Brake");
+    private JButton turboOnButton = new JButton("Saab Turbo on");
+    private JButton turboOffButton = new JButton("Saab Turbo off");
+    private JButton liftBedButton = new JButton("Scania Lift Bed");
+    private JButton lowerBedButton = new JButton("Lower Lift Bed");
 
-    JButton startButton = new JButton("Start all cars");
-    JButton stopButton = new JButton("Stop all cars");
+    private JButton startButton = new JButton("Start all cars");
+    private JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
     public CarView(String framename){
@@ -116,6 +117,10 @@ public abstract class CarView extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    public void repaint(){
+        this.drawPanel.repaint();
+    }
+
     public abstract void onGasButton(int gasAmount);
     public abstract void onBreakButton(int gasAmount);
     public abstract void onTurboOnButton();
@@ -124,4 +129,6 @@ public abstract class CarView extends JFrame{
     public abstract void onLowerBedButton();
     public abstract void onStartButton();
     public abstract void onStopButton();
+
+    public abstract Stream<CarViewData> getCars();
 }
