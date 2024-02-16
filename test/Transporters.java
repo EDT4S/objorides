@@ -195,9 +195,7 @@ public class Transporters {
         doubleFlakTest(flak,4.0);
     }
 
-    @Test
-    public void carFerryFlak(){
-        var car = new CarFerry<Volvo240>(new Coord(0.0,0.0),0);
+    public <C extends Vehicle & Flak.Has<Unit> & Container.Has<Volvo240>> void containerFlakTest(C car,Volvo240[] cs,boolean reversed){
         flakTest(car.getFlak());
         unitFlakTest(car.getFlak());
         vehicleFlakTest(car);
@@ -214,13 +212,6 @@ public class Transporters {
 
         car.stopEngine();
         car.getFlak().openFlak();
-        Volvo240[] cs = {
-                new Volvo240(new Coord(0.00001,-1.0),0.2),
-                new Volvo240(new Coord(0.0001,-0.01),0.4),
-                new Volvo240(new Coord(0.001,-0.001),0.6),
-                new Volvo240(new Coord(0.01,-0.0001),0.8),
-                new Volvo240(new Coord(0.1,-0.00001),1.0),
-        };
         containerAddTest(car.getContainer(),cs);
         containerCannotAddTest(car.getContainer(),new Volvo240(new Coord(0,0),0));
 
@@ -229,6 +220,7 @@ public class Transporters {
         car.move();
         car.stopEngine();
 
+        if(reversed) Collections.reverse(Arrays.asList(cs));
         containerRemoveTest(car.getContainer(),cs);
 
         //Removed at the same location.
@@ -256,62 +248,25 @@ public class Transporters {
     }
 
     @Test
+    public void carFerryFlak(){
+        Volvo240[] cs = {
+                new Volvo240(new Coord(0.00001,-1.0),0.2),
+                new Volvo240(new Coord(0.0001,-0.01),0.4),
+                new Volvo240(new Coord(0.001,-0.001),0.6),
+                new Volvo240(new Coord(0.01,-0.0001),0.8),
+                new Volvo240(new Coord(0.1,-0.00001),1.0),
+        };
+        containerFlakTest(new CarFerry<Volvo240>(new Coord(0.0,0.0),0),cs,false);
+    }
+
+    @Test
     public void carTransporterFlak(){
-        var car = new CarTransporter<Volvo240>(new Coord(0.0,0.0),0);
-        flakTest(car.getFlak());
-        unitFlakTest(car.getFlak());
-        vehicleFlakTest(car);
-
-        //Cannot add when flak is closed.
-        car.stopEngine();
-        car.getFlak().closeFlak();
-        containerCannotAddTest(car.getContainer(),new Volvo240(new Coord(0,0),0));
-
-        //Cannot add when moving.
-        car.startEngine();
-        car.gas(1.0);
-        containerCannotAddTest(car.getContainer(),new Volvo240(new Coord(0,0),0));
-
-        car.stopEngine();
-        car.getFlak().openFlak();
         Volvo240[] cs = {
                 new Volvo240(new Coord(0.00001,-1.0),0.2),
                 new Volvo240(new Coord(0.0001,-0.01),0.4),
                 new Volvo240(new Coord(0.001,-0.001),0.6),
         };
-        containerAddTest(car.getContainer(),cs);
-        containerCannotAddTest(car.getContainer(),new Volvo240(new Coord(0,0),0));
-
-        //Move around a bit.
-        car.gas(1.0);
-        car.move();
-        car.stopEngine();
-
-        Collections.reverse(Arrays.asList(cs));
-        containerRemoveTest(car.getContainer(),cs);
-
-        //Removed at the same location.
-        for(var c : cs) {
-            assertEquals(c.getPosition().getX(), car.getPosition().getX(), 0.000001);
-            assertEquals(c.getPosition().getY(), car.getPosition().getY(), 0.000001);
-        }
-
-        //Can add after removals.
-        Volvo240[] cs2 = {
-                new Volvo240(new Coord(car.getPosition()), 0.2),
-        };
-        containerAddTest(car.getContainer(),cs2);
-
-        //Cannot add too far away
-        containerCannotAddTest(car.getContainer(),new Volvo240(new Coord(100000,100000),50));
-
-        //Cannot remove when flak is closed.
-        car.getFlak().closeFlak();
-        assertNull(car.getContainer().remove());
-
-        //Cannot remove when moving.
-        car.gas(1.0);
-        assertNull(car.getContainer().remove());
+        containerFlakTest(new CarTransporter<Volvo240>(new Coord(0.0,0.0),0),cs,true);
     }
 
     @Test
