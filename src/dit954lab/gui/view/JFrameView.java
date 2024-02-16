@@ -1,6 +1,7 @@
 package dit954lab.gui.view;
 
 import dit954lab.gui.CarData;
+import dit954lab.gui.ModelView;
 import dit954lab.gui.controller.Controller;
 
 import javax.swing.*;
@@ -16,13 +17,11 @@ import java.util.stream.Stream;
  * each of it's components.
  **/
 
-public abstract class JFrameView extends JFrame implements View{
+public class JFrameView extends JFrame implements View{
     private static final int X = 860;
     private static final int Y = 800;
 
-    protected Controller controller;
-
-    protected DrawPanel drawPanel = new DrawPanel(X, Y-240){@Override public Stream<CarData> getCars(){return JFrameView.this.getCars();}};
+    protected DrawPanel drawPanel;
 
     protected JPanel controlPanel = new JPanel();
 
@@ -42,14 +41,14 @@ public abstract class JFrameView extends JFrame implements View{
     protected JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public JFrameView(String framename,Controller controller){
-        initComponents(framename);
-        this.controller = controller;
+    public JFrameView(String framename, Controller controller, ModelView model){
+        this.drawPanel = new DrawPanel(X, Y-240,model);
+        initComponents(framename,controller);
     }
 
     // Sets everything in place and fits everything
     // TODO: Take a good look and make sure you understand how these methods and components work
-    private void initComponents(String title) {
+    private void initComponents(String title,Controller controller) {
 
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));

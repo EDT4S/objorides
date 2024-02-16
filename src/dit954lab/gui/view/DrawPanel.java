@@ -1,6 +1,7 @@
 package dit954lab.gui.view;
 
 import dit954lab.gui.CarData;
+import dit954lab.gui.ModelView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,10 +13,12 @@ import java.util.stream.Stream;
 
 // This panel represents the animated part of the view with the car images.
 
-public abstract class DrawPanel extends JPanel{
+public class DrawPanel extends JPanel{
+	protected ModelView model;
 	protected HashMap<String,BufferedImage> images = new HashMap<>();
 	// Initializes the panel and reads the images
-	public DrawPanel(int x,int y){
+	public DrawPanel(int x, int y, ModelView model){
+		this.model = model;
 		this.setDoubleBuffered(true);
 		this.setPreferredSize(new Dimension(x,y));
 		this.setBackground(Color.green);
@@ -30,13 +33,11 @@ public abstract class DrawPanel extends JPanel{
 		}
 	}
 
-	public abstract Stream<CarData> getCars();
-
 	// This method is called each time the panel updates/refreshes/repaints itself
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-		this.getCars().forEach(car -> {
+		this.model.getCars().forEach(car -> {
 			BufferedImage image = this.images.get(car.name());
 			if(image != null){
 				g.drawImage(image,car.x(),car.y(),null);

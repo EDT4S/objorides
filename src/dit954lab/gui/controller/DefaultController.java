@@ -1,6 +1,7 @@
 package dit954lab.gui.controller;
 
 import dit954lab.gui.CarData;
+import dit954lab.gui.ModelView;
 import dit954lab.gui.view.JFrameView;
 import dit954lab.gui.view.View;
 import dit954lab.world.vehicles.Car;
@@ -22,7 +23,7 @@ import java.util.stream.Stream;
 * modifying the model state and the updating the view.
  */
 
-public class DefaultController implements Controller{
+public class DefaultController implements Controller, ModelView {
     // member fields:
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
@@ -48,16 +49,7 @@ public class DefaultController implements Controller{
     public static void main(String[] args) {
         // Instance of this class
         DefaultController cc = new DefaultController();
-        cc.frame = new JFrameView("CarSim 1.0",cc){
-            @Override
-            public Stream<CarData> getCars(){
-                return cc.cars.stream().map(car -> new CarData(
-                    car.getModelName(),
-                    (int) Math.round(car.getPosition().getX()),
-                    (int) Math.round(car.getPosition().getY())
-                ));
-            }
-        };
+        cc.frame = new JFrameView("CarSim 1.0",cc,cc);
 
         // Start the timer
         cc.timer.start();
@@ -129,5 +121,14 @@ public class DefaultController implements Controller{
         for (Car car : this.cars) {
             car.stopEngine();
         }
+    }
+
+    @Override
+    public Stream<CarData> getCars(){
+        return this.cars.stream().map(car -> new CarData(
+                car.getModelName(),
+                (int) Math.round(car.getPosition().getX()),
+                (int) Math.round(car.getPosition().getY())
+        ));
     }
 }
