@@ -41,6 +41,15 @@ public class Controller {
                         (int) Math.round(car.getPosition().getY())
                 ));
             }
+            @Override
+            public ViewModel.Car getRepairShop(){
+                var pos = model.getTheVolvoRepairShop().getPosition();
+                return new ViewModel.Car(
+                        "Volvo",
+                        (int) Math.round(pos.getX()),
+                        (int) Math.round(pos.getY())
+                );
+            }
         };
         Listener l = new Listener(){
             @Override
@@ -117,6 +126,9 @@ public class Controller {
 
                 view.repaint();
             }
+
+            //TODO: It works because of the checks in add, but it is a little bit inefficient.
+            model.getTheVolvoRepairShop().getContainer().add(model.getTheVolvo());
         }
     }
 }

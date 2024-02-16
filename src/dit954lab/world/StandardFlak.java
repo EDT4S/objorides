@@ -20,7 +20,7 @@ public final class StandardFlak{
 		        Flak<F>,
 		        Container.Wrapped<Obj>
 	{
-		double DEFAULT_MINIMAL_PICKUP_DISTANCE = 400;
+		double DEFAULT_MINIMAL_PICKUP_DISTANCE = 10;
 		
 		default double getMinimalPickupDistance(){
 			return DEFAULT_MINIMAL_PICKUP_DISTANCE;

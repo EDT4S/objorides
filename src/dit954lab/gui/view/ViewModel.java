@@ -8,6 +8,7 @@ import java.util.stream.Stream;
  */
 public interface ViewModel {
     Stream<Car> getCars();
+    Car getRepairShop();
 
     record Car(String name,int x,int y){}
 }

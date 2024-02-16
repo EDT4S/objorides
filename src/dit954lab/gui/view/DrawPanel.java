@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 // This panel represents the animated part of the view with the car images.
 
@@ -23,7 +24,7 @@ public class DrawPanel extends JPanel{
 			images.put("Volvo240",ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Volvo240.jpg")));
 			images.put("Saab95",ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Saab95.jpg")));
 			images.put("Scania",ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Scania.jpg")));
-			//ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/VolvoBrand.jpg")),
+			images.put("Volvo",ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/VolvoBrand.jpg")));
 		}catch(IOException ex){
 			ex.printStackTrace();
 		}
@@ -33,11 +34,15 @@ public class DrawPanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-		this.model.getCars().forEach(car -> {
+		Stream.concat(
+				Stream.of(this.model.getRepairShop()),
+				this.model.getCars()
+		).forEach(car -> {
 			BufferedImage image = this.images.get(car.name());
 			if(image != null){
 				g.drawImage(image,car.x(),car.y(),null);
 			}
 		});
+
 	}
 }
