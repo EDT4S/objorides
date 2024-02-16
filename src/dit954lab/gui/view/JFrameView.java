@@ -123,5 +123,8 @@ public class JFrameView extends JFrame implements View{
         this.drawPanel.repaint();
     }
 
-
+    @Override
+    public int getWidth(){
+        return X;
+    }
 }

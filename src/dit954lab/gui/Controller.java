@@ -109,6 +109,12 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             for (Car car : model.cars) {
                 car.move();
+
+                //TODO: Sloppy boundary checking, but it is simple and good enough.
+                if(car.getPosition().getX() < 0 || car.getPosition().getX() > view.getWidth()){
+                    car.getVelocity().oppose();
+                }
+
                 view.repaint();
             }
         }

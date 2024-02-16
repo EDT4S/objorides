@@ -5,4 +5,5 @@ package dit954lab.gui.view;
  */
 public interface View{
 	void repaint();
+	int getWidth();
 }
