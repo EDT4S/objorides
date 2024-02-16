@@ -1,14 +1,9 @@
 package dit954lab.gui.view;
 
-import dit954lab.gui.CarData;
-import dit954lab.gui.ModelView;
-import dit954lab.gui.controller.Controller;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.util.stream.Stream;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -41,14 +36,14 @@ public class JFrameView extends JFrame implements View{
     protected JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public JFrameView(String framename, Controller controller, ModelView model){
+    public JFrameView(String framename, Listener listener, ViewModel model){
         this.drawPanel = new DrawPanel(X, Y-240,model);
-        initComponents(framename,controller);
+        initComponents(framename, listener);
     }
 
     // Sets everything in place and fits everything
     // TODO: Take a good look and make sure you understand how these methods and components work
-    private void initComponents(String title,Controller controller) {
+    private void initComponents(String title, Listener listener) {
 
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));
@@ -100,14 +95,14 @@ public class JFrameView extends JFrame implements View{
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
-        gasButton.addActionListener(e -> controller.gas(gasAmount));
-        brakeButton.addActionListener(e -> controller.brake(gasAmount));
-        turboOnButton.addActionListener(e -> controller.turboOn());
-        turboOffButton.addActionListener(e -> controller.turboOff());
-        liftBedButton.addActionListener(e -> controller.liftBed());
-        lowerBedButton.addActionListener(e -> controller.lowerBed());
-        startButton.addActionListener(e -> controller.start());
-        stopButton.addActionListener(e -> controller.stop());
+        gasButton.addActionListener(e -> listener.onGas(gasAmount));
+        brakeButton.addActionListener(e -> listener.onBrake(gasAmount));
+        turboOnButton.addActionListener(e -> listener.onTurboOn());
+        turboOffButton.addActionListener(e -> listener.onTurboOff());
+        liftBedButton.addActionListener(e -> listener.onLiftBed());
+        lowerBedButton.addActionListener(e -> listener.onLowerBed());
+        startButton.addActionListener(e -> listener.onStart());
+        stopButton.addActionListener(e -> listener.onStop());
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
@@ -127,4 +122,6 @@ public class JFrameView extends JFrame implements View{
         // repaint() calls the paintComponent method of the panel
         this.drawPanel.repaint();
     }
+
+
 }

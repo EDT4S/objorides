@@ -1,23 +1,19 @@
 package dit954lab.gui.view;
 
-import dit954lab.gui.CarData;
-import dit954lab.gui.ModelView;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 // This panel represents the animated part of the view with the car images.
 
 public class DrawPanel extends JPanel{
-	protected ModelView model;
+	protected ViewModel model;
 	protected HashMap<String,BufferedImage> images = new HashMap<>();
 	// Initializes the panel and reads the images
-	public DrawPanel(int x, int y, ModelView model){
+	public DrawPanel(int x, int y, ViewModel model){
 		this.model = model;
 		this.setDoubleBuffered(true);
 		this.setPreferredSize(new Dimension(x,y));
